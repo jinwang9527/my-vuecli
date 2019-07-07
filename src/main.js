@@ -4,13 +4,14 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from '@/store'
-import '@/permission' // permission control
-
-
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+import 'element-ui/lib/theme-chalk/display.css';
+import '@/styles/index.scss'
+import './permission'
 
 Vue.config.productionTip = false;
-//this.$store.state.count  访问
-
+Vue.use(ElementUI)
 
 /* eslint-disable no-new */
 new Vue({

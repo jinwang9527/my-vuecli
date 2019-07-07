@@ -1,13 +1,7 @@
-import NotAuthority from '../../components/NotAuthority'
+import layout from '../../views/layout/Layout'
 export default {
-  path:'/NotAuthority',
+  path:'/view',
   name:'NotAuthority',
-  redirect:'/Authority,',
-  children:[
-    {
-      path:'/Authority',
-      name:'Authority',
-      component:NotAuthority
-    }
-  ]
+  component:layout,
 }
+

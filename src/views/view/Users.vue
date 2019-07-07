@@ -9,8 +9,6 @@
 <button type="button" @click="returnGo">返回</button>
   <button type="button" @click="goNotAuthority">goNotAuthority</button>
   <router-link to="/notAuthority">goNotAuthority</router-link>
-  <button type="button" @click="goToHavsRoles">HasNotAuthority</button>
-  <button type="button" @click="goTouser">user</button>
 </div>
 </template>
 
@@ -32,14 +30,8 @@
 
     },
     methods: {
-      goTouser(){
-        this.$router.push({path:'/user'})
-      },
-      goToHavsRoles(){
-        this.$router.push({path:'/a/HasNotAuthority'})
-      },
       goNotAuthority(){
-        this.$router.push({path:'/view'})
+        this.$router.push({path:'/notAuthority'})
       },
       updateTitle(val) {
         console.log(val);
