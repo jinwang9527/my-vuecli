@@ -6,7 +6,7 @@
       <div class="avatar-wrapper">
         <!-- <img :src="getImage(avatar)" class="user-avatar">-->
         <div class="avatarUserName">
-          <span>{{this.name}}</span>
+          <span>张三</span>
           <i class="el-icon-caret-bottom"/>
         </div>
         <div class="clear: both;"></div>

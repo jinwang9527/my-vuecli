@@ -1,25 +1,19 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Users from '@/components/Users'
-import ssss from '@/components/ssss'
-import notAuthority from './NotAuthority'
-import HelloWord from '@/components/HelloWorld'
+import login from '../views/login/login'
+import notFount from '../views/404/notFount'
+import test from './test'
+
 Vue.use(Router);
 
 
-import HasNotAuthority from './HasNotAuthority'
-import user from './user'
 export const constantRouterMap = [
-  notAuthority,
-  {path: '/', component: HelloWord },
-  {path: '/Users', name: 'Users', component: Users},
-  {path: '/404', name: '404', component: ssss}
+  test,
+  {path: '/', component: login},
+  {path: '/404', name: '404', component:notFount}
 ];
 
-export const asyncRouterMap = [
-  HasNotAuthority,
-  user
-];
+export const asyncRouterMap = [];
 
 
 export default new Router({
