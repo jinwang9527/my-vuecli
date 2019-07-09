@@ -90,17 +90,18 @@
       },
       getParameters() {
         const parameters = {};
-
+        /* 1、添加分页. */
         parameters.pageSize = this.page.pageSize;
         parameters.pageIndex = this.page.pageIndex;
-
+        /* 2、添加额外参数. */
         if (this.resources && this.resources.parameters) {
           for (let item in this.resources.parameters) {
             parameters[item] = this.resources.parameters[item]
           }
         }
+        /* 3、添加Tab参数 */
         if (this.currentTab.prop) parameters[this.currentTab.prop] = this.currentTab.value;
-
+        /* 4、添加搜索条件 */
         if (this.searchObj) {
           for (let item in this.searchObj) {
             parameters[item] = this.searchObj[item]
@@ -114,6 +115,16 @@
         this.OnCurrentChange(1)
       }
 
+    },
+    computed: {
+      refresh() {
+        return this.resources.refresh
+      }
+    },
+    watch: {
+      refresh() {
+        this.OnCurrentChange(this.page.pageIndex)
+      }
     }
   }
 </script>
