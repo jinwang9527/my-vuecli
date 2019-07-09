@@ -1,4 +1,4 @@
-import {getToken, setToken} from '@/utils/auth'
+import {getToken, setToken,removeToken} from '../utils/auth'
 import {userLogin, getUserInfo, getRoles} from "../api/login/login"
 import {asyncRouterMap} from '../router'
 
@@ -62,7 +62,7 @@ const user = {
   actions: {
     Login({commit}, user) {
       return new Promise((resolve, reject) => {
-        userLogin(user).then(response => {
+        userLogin({account:"A10002",password:"123456"}).then(response => {
           commit("setToken", response.data);
           setToken(response.data)
           resolve()
@@ -108,10 +108,19 @@ const user = {
               }
               roles.push(route)
             }
-            resolve(roles)
+
           })
-          reject()
+          resolve(roles)
         })
+        reject()
+      })
+    },
+    //前端登出
+    FedLogOut({commit}){
+      return new Promise(resolve => {
+        commit ('SET_TOKEN','')
+        removeToken()
+        resolve()
       })
     }
 

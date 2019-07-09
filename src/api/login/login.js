@@ -23,3 +23,12 @@ export function getRoles() {
     method: 'post',
   })
 }
+export function selectPosts({pageIndex,pageSize}) {
+  return request({
+    url: '/myPosts/selectPosts',
+    method: 'post',
+    data:{
+      pageIndex,
+      pageSize}
+  })
+}

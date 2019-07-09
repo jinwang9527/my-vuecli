@@ -53,7 +53,6 @@
                :before-close="closeSearchDialog">
       <el-form v-model="searchDialogObj"
                :rules="searchDialogObj.rules"
-
                :label-width="searchCondition.content.labelWidth === null ? '50px':searchCondition.labelWidth"
                label-position="right">
 
@@ -132,9 +131,7 @@
       },
       search(searchObj) {
         let realConditions = searchObj;
-
         for (let condition of this.searchCondition.content) {
-
           if (realConditions[condition.prop] === '') realConditions[condition.prop] = null
           if (condition.type === 'time') {
             realConditions[this.addStringPrefix('start', condition.prop)] = realConditions[condition.prop][0];

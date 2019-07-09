@@ -11,7 +11,7 @@
 <script>
   import TableView from '../../components/view/TableView'
   import BaseView from '../../components/BaseView'
-  import {getUserInfo} from '../../api/login/login'
+  import {selectPosts} from '../../api/login/login'
   export default {
     name: 'first',
     extends: BaseView,
@@ -27,7 +27,7 @@
           searchCondition:{
             labelWidth: '70px',
             content: [
-              {prop: 'name', label: '角色管理'},
+              {prop: 'All', label: '角色管理'},
               {prop: 'name', label: '配置管理'},
               {prop: 'name', label: '配置管'},
               {prop: 'name', label: '用户管理',type:'time' },
@@ -42,7 +42,7 @@
           table:{
             content:[
               {prop: 'postsTitle', label: '帖子标题'},
-              {prop: 'nickName', label: '创建人'},
+              {prop: 'postsContent', label: '创建人'},
               {prop: 'createTime', label: '创建时间', type: 'time'},
             ],
             operations:[
@@ -51,10 +51,10 @@
             ]
           },
           resources: {
-            api: getUserInfo,
+            api: selectPosts,
             refresh: 0,
             parameters: {
-              a: 'b'
+
             }
           }
         }

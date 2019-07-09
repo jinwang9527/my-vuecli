@@ -13,39 +13,6 @@
           order: Obj.order,
           total: 0
         },
-        tableData: [{
-          date: '2016-05-03',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333,
-          tag: '家'
-        }, {
-          date: '2016-05-02',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333,
-          tag: '公司'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333,
-          tag: '家'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333,
-          tag: '公司'
-        }],
       }
     },
     methods: {
@@ -65,15 +32,14 @@
        * @returns {number}
        */
       setData(response) {
-        //this.content = response.data;
+        this.content = response.data;
         this.page.total = 0;
-        this.content=this.tableData;
-       /* if (response.data === null) {
+        if (response.data === null) {
           this.content = [];
           this.content=this.tableData;
           return this.page.total = 0;
-        }*/
-       // if (response.paginator !== null) this.page.total = response.paginator.totalCount
+        }
+        if (response.paginator !== null) this.page.total = response.paginator.totalCount
       },
 
       /**

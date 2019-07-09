@@ -18,9 +18,14 @@ router.beforeEach((to, from, next) => {
              store.dispatch("filterAsyncRouter",res).then(role=>{
                router.addRoutes(role);
                router.addRoutes([{path:'/**',redirect:'/404'}]);
-               console.log(role)
+               console.log('role'+role)
                next()
              })
+           })
+         }).catch((err) => {
+           store.dispatch('FedLogOut').then(() => {
+
+             next({ path: '/' })
            })
          })
        }else {

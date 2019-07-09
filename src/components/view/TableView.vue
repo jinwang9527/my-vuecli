@@ -1,14 +1,28 @@
 <template>
   <el-card>
+
+    <!--标签页-->
     <b-tabs @change="getCurrentTab" :tabs="tabs"></b-tabs>
 
+    <!--搜索框-->
     <b-searchers :searchCondition="searchCondition" @search="search"></b-searchers>
 
+    <!--顶部操作按钮-->
     <b-butions :buttons="buttons"></b-butions>
 
+    <!--内容-->
     <b-table :data="content" :table="table"></b-table>
 
-
+    <!--分页-->
+    <el-pagination
+      background
+      @current-change="OnCurrentChange"
+      :current-page="page.pageIndex"
+      :page-size="page.pageSize"
+      layout="total, prev, pager, next, jumper"
+      :total="page.total">
+    </el-pagination>
+    <div class="clearFloat"></div>
   </el-card>
 </template>
 
@@ -131,5 +145,8 @@
 
 
 <style>
-
+  .el-pagination {
+    margin-top: 10px;
+    float: right;
+  }
 </style>

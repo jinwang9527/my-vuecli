@@ -2,6 +2,7 @@
   <div>
     <el-table
       :data="data"
+      size="mini"
       :border="table.border !== false"
       :max-height="table.maxHeight ? 500:table.maxHeight "
       @select="select"
@@ -18,6 +19,7 @@
       <el-table-column
         v-for="(item,index) in table.content"
         :key="index"
+        align="center"
         :prop="item.prop"
         :label="item.label"
         :width="item.width"

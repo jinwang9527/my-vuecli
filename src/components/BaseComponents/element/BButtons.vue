@@ -40,6 +40,6 @@ export default {
 
 <style>
   .BTopClick{
-    margin: 5px 0 5px 0;
+    margin: 5px 0;
   }
 </style>
