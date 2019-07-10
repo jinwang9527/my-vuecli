@@ -41,10 +41,11 @@
           ],
           table:{
             content:[
-              {prop: 'postsTitle', label: '帖子标题'},
+              {prop: 'postsTitle', label: '帖子标题',},
               {prop: 'postsContent', label: '创建人'},
               {prop: 'createTime', label: '创建时间', type: 'time'},
             ],
+            enums:['posts'],
             operations:[
               {name:'点击',click:this.onclick},
               {name:'点击',click:this.onclick}

@@ -29,6 +29,7 @@
         :show-overflow-tooltip="item.showOverflowTooltip === false">
         <template slot-scope="scope">
           <span v-if="item.type=== 'boolean'">{{formatterBoolean(scope.row[item.prop])}}</span>
+          <span v-else-if="item.table">{{ formatterEmun(scope.row[item.prop],item.table,item.prop) }}</span>
           <span v-else>{{ scope.row[item.prop] }}</span>
         </template>
       </el-table-column>
@@ -45,7 +46,7 @@
                      @click="onClick(table.operations[0].click,0,table.operations[0])"
                      v-show="isMethod(table.operations[0].show,0,table.operations[0],true)">{{table.operations[0].name}}
           </el-button>
-          <el-dropdown v-else  trigger="hover">
+          <el-dropdown v-else trigger="hover">
             <el-button plain size="mini">更多操作 <i class="el-icon-arrow-down"></i></el-button>
             <el-dropdown-menu>
               <el-dropdown-item
@@ -69,9 +70,10 @@
 
 <script>
   import {FUNCTION} from '../../../utils/constats'
-
+ import BaseView from '../../BaseView'
   export default {
     name: 'BTable',
+    extends:BaseView,
     props: {
       data: {
         type: Array,
@@ -89,11 +91,27 @@
           content: [],
           maxHeight: 500,
           border: false,
-          operations: []
+          operations: [],
+          enums: []
         }
       }
     },
+    created() {
+      if (this.table.enums) this.getEnums(this.table.enums)
+    },
     methods: {
+
+      formatterEmun(value, table, prop) {
+        if (this.enums[table] && this.enums[table][prop]) {
+          for (let item of this.enums[table][prop]) {
+            if (item.value === value) {
+              return item.text
+            }
+          }
+        }
+        return value
+      },
+
       select(selection, row) {
         if (typeof this.table.select === FUNCTION) this.table.select(row)
       },

@@ -32,3 +32,12 @@ export function selectPosts({pageIndex,pageSize}) {
       pageSize}
   })
 }
+export function batchSelectDictionary({pageIndex,pageSize}) {
+  return request({
+    url: '/myPosts/batchSelectDictionary',
+    method: 'post',
+    data:{
+      pageIndex,
+      pageSize}
+  })
+}

@@ -4,7 +4,7 @@ import {asyncRouterMap} from '../router'
 
 
 function getChildren(route, roles) {
-  const children = []
+  const children = [];
   route.forEach(item => {
     if (item.children !== undefined) {
       if (item.children && item.children.length > 0) {
@@ -12,7 +12,7 @@ function getChildren(route, roles) {
       }
     }
     children.push(item)
-  })
+  });
   return children
 }
 

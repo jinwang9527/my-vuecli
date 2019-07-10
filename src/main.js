@@ -9,6 +9,8 @@ import 'element-ui/lib/theme-chalk/index.css'
 import 'element-ui/lib/theme-chalk/display.css';
 import '@/styles/index.scss'
 import './permission'
+import './assets/iconfont/iconfont.css'
+import './assets/iconfont/iconfont.js'
 
 Vue.config.productionTip = false;
 Vue.use(ElementUI)

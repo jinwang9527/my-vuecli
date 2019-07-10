@@ -1,12 +1,14 @@
 <script>
   import {errorMessage, successMessage, messageBox} from '../utils/message'
   import {Obj} from '../utils/constats'
+  import {batchSelectDictionary} from '../api/login/login'
 
   export default {
     name: 'BaseView',
     data() {
       return {
         content: [],
+        enums: {},
         page: {
           pageSize: Obj.pageSize,
           pageIndex: Obj.pageIndex,
@@ -16,6 +18,29 @@
       }
     },
     methods: {
+
+      getEnums(tableName) {
+        if (tableName) {
+          return batchSelectDictionary({tableName}).then(response => {
+            if (!response.data) return this.enums = {}
+            for (let table of response.data) {
+              this.enums[table] = {}
+              for (let item of response.data[table]) {
+                if (this.enums[table][item.fileName] === null || this.enums[table][item.fileName] === undefined)
+                  this.enums[table][item.fileName] = []
+                this.enums[table][item.fileName].push({value: item.dictionaryValue, text: item.dictionaryText})
+              }
+            }
+            return this.enums
+          })
+        }
+      },
+      startLoading() {
+        this.$store.commit('APP_MAIN_LOADING', true)
+      },
+      endLoading() {
+        this.$store.commit('APP_MAIN_LOADING', false)
+      },
       setPageSize(val) {
         this.page.pageSize = val
       },
@@ -36,7 +61,7 @@
         this.page.total = 0;
         if (response.data === null) {
           this.content = [];
-          this.content=this.tableData;
+          this.content = this.tableData;
           return this.page.total = 0;
         }
         if (response.paginator !== null) this.page.total = response.paginator.totalCount
