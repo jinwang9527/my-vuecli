@@ -155,7 +155,60 @@
     methods: {
 
       OnClick(item) {
+        if (!item.click) return;
+        if (typeof item.click === "function") return this.OnClickOrigin(item);
+        if (item.click === 'Submit') return this.Submit();
+        if (item.click === 'OnSave') return this.OnSave();
+        if (item.click === 'Reset') return this.Reset();
 
+      },
+
+      initFormatter(){
+
+      },
+
+      Reset(){
+        this.$refs.model.resetFields()
+        this.model = JSON.parse(JSON.stringify(this.form.model))
+
+      },
+
+
+      OnSave() {
+        this.$refs.model.validate(valid => {
+          if (valid) {
+            this.invokeApi(this.form.api, this.preProcessing(this.model)).then(response => {
+              this.successMessageBox('保存成功!')
+            })
+          }
+        })
+      },
+
+      Submit() {
+        this.$refs.model.validate(valid => {
+          if (valid) {
+            this.invokeApi(this.form.api, this.OnClickOrigin(this.model)).then(response => {
+              this.messageBox({
+                message: '是否返回上一页！',
+                type: 'success',
+                title: '成功'
+              }).then(() => {
+                this.lastPage()
+              })
+            })
+          }
+        })
+      },
+
+      OnClickOrigin(item) {
+        this.$refs.model.validate(valid => {
+          if (valid) return item.OnClick(this.preProcessing(this.model))
+        })
+      },
+      preProcessing(model) {
+        if (!model) return
+        let models = JSON.parse(JSON.stringify(model))
+        return models
       },
 
 

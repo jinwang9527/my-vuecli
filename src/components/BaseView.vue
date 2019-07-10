@@ -130,8 +130,13 @@
        * @param cancelButtonText
        * @returns {*}
        */
-      messageBox({title = '提示', confirmButtonText = '确认', cancelButtonText = '取消'}) {
-        return messageBox({title: title, confirmButtonText: confirmButtonText, cancelButtonText: cancelButtonText})
+      messageBox({title = '提示', confirmButtonText = '确认', cancelButtonText = '取消', message = 'message'}) {
+        return messageBox({
+          title: title,
+          confirmButtonText: confirmButtonText,
+          cancelButtonText: cancelButtonText,
+          message:message
+        })
       },
 
       /**

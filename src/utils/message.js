@@ -32,7 +32,7 @@ export function successMessage(message) {
 export function messageBox({message, title, confirmButtonText, cancelButtonText, type = 'warning '}) {
   return new Promise((resolve, reject) => {
     MessageBox.confirm(message, title, {
-      confirmButtonText: cancelButtonText,
+      confirmButtonText: confirmButtonText,
       cancelButtonText: cancelButtonText,
       type: type
     }).then(() => {
