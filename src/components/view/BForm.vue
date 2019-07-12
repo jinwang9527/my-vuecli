@@ -101,7 +101,7 @@
           <el-col :sm="12">
             <el-form-item>
               <el-button v-for="(item,index) in form.operations" v-if="isShow(item.show)" :key="index"
-                         @click="OnClick(item)" :type="item.type ? item.type : null">
+                         @click="OnClicks(item)" :type="item.type ? item.type : null">
                 {{ item.name }}
               </el-button>
             </el-form-item>
@@ -123,6 +123,7 @@
   import BContainer from '../BaseComponents/element/BContainer'
   import BaseView from '../BaseView'
   import BImageUpload from '../BaseComponents/element/BImageUpload'
+  import typeFormatter from '../../components/BaseComponents/utils/formatters'
 
   export default {
     name: 'BForm',
@@ -145,32 +146,55 @@
       },
 
     },
+    mounted() {
+      this.Reset()
+    },
     data() {
       return {
         model: {},
         selectedImg: null,
-
       }
     },
     methods: {
-
-      OnClick(item) {
+      OnClicks(item) {
         if (!item.click) return;
         if (typeof item.click === "function") return this.OnClickOrigin(item);
         if (item.click === 'Submit') return this.Submit();
         if (item.click === 'OnSave') return this.OnSave();
         if (item.click === 'Reset') return this.Reset();
-
       },
 
-      initFormatter(){
-
+      formatter(value, item) {
+        if (value === null || value === undefined) return;
+        //自定义初始化
+        if (item.formatter && typeof item.formatter === "function") return this.model[item.name] = item.formatter(value);
+        //远程接口格式化
+        if (item.formatter && item.formatter === 'remote' && item.table) return this.formatterRemote(value, item);
+        //标准类型格式化
+        if (item.formatter && item.formatter === 'standard') return this.model[item.name] = typeFormatter[item.formatter](value)
       },
 
-      Reset(){
-        this.$refs.model.resetFields()
-        this.model = JSON.parse(JSON.stringify(this.form.model))
+     //获取枚举
+      formatterRemote(value, item) {
+        this.getEnums([item.table]).then(enums => {
+          if (enums && enums[item.table][item.name]) {
+            for (let name of enums[item.table][item.name]) {
+              if (value === name.value) return this.model[item.name] = name.text
+            }
+          }
+        })
+      },
 
+      initFormatter() {
+        for (let item in this.form.formItems) {
+          if (item !== null) this.formatter(this.model[item.name], item)
+        }
+      },
+
+      Reset() {
+        this.$refs.model.resetFields();
+        this.model = JSON.parse(JSON.stringify(this.form.model));
+        this.initFormatter()
       },
 
 
@@ -202,18 +226,18 @@
 
       OnClickOrigin(item) {
         this.$refs.model.validate(valid => {
-          if (valid) return item.OnClick(this.preProcessing(this.model))
+          if (valid) return item.click(this.preProcessing(this.model))
         })
       },
       preProcessing(model) {
-        if (!model) return
-        let models = JSON.parse(JSON.stringify(model))
+        if (!model) return;
+        const models = JSON.parse(JSON.stringify(model));
         return models
       },
 
 
       isShow(show) {
-        if (show && typeof show === 'function') return show(this.form.model)
+        if (show && typeof show === 'function') return show(this.form.model);
         return show
       },
 
@@ -224,7 +248,6 @@
       closeImageShow() {
         this.selectedImg = null
       },
-
       getImage(path) {
         return process.env.IMAGE_URL + path
       },

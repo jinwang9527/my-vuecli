@@ -95,8 +95,8 @@
        * @returns {*}
        */
       getQuery(key) {
-        const value = this.$route.query[key]
-        if (value === null) return null
+        const value = this.$route.query[key];
+        if (value === null) return null;
         return value
       },
 
