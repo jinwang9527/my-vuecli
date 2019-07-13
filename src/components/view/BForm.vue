@@ -124,6 +124,7 @@
   import BaseView from '../BaseView'
   import BImageUpload from '../BaseComponents/element/BImageUpload'
   import typeFormatter from '../../components/BaseComponents/utils/formatters'
+  import rules from '../BaseComponents/utils/rules'
 
   export default {
     name: 'BForm',
@@ -146,8 +147,13 @@
       },
 
     },
+    created() {
+      if (!this.form.model) this.form.model = {};
+      this.initValidator()
+    },
     mounted() {
-      this.Reset()
+      if (!this.form.model)
+        this.Reset();
     },
     data() {
       return {
@@ -155,6 +161,7 @@
         selectedImg: null,
       }
     },
+
     methods: {
       OnClicks(item) {
         if (!item.click) return;
@@ -163,6 +170,25 @@
         if (item.click === 'OnSave') return this.OnSave();
         if (item.click === 'Reset') return this.Reset();
       },
+
+      initValidator() {
+        if (!this.form.model.formItems) return;
+        for (let item of this.form.model.formItems) {
+
+          if (!item.rules && !(item.rules instanceof Array)) item.rules = [];
+
+          if (item.required) item.rules.push(rules['required'](item))
+
+          if (item.validator && rules[item.validator]) item.rules.push(rules[item.validator](item))
+
+          if (item.validator && rules[item.validator] === 'function') item.rules.push(rules['validator'](item))
+
+
+        }
+
+
+      },
+
 
       formatter(value, item) {
         if (value === null || value === undefined) return;
@@ -174,7 +200,7 @@
         if (item.formatter && item.formatter === 'standard') return this.model[item.name] = typeFormatter[item.formatter](value)
       },
 
-     //获取枚举
+      //获取枚举
       formatterRemote(value, item) {
         this.getEnums([item.table]).then(enums => {
           if (enums && enums[item.table][item.name]) {

@@ -1,7 +1,18 @@
 <template>
-  <b-form :form="form">
+ <!-- <b-form :form="form">
 
-  </b-form>
+  </b-form>-->
+
+ <el-card>
+    <el-form :model="model" ref="model" >
+      <el-form-item prop="ip" label="请输入ip" :rules="[
+     { required: true, message: '请输入活动名称', trigger: 'blur' },
+      ]" >
+           <el-input v-model="model.ip"></el-input>
+      </el-form-item>
+    </el-form>
+ </el-card>
+
 </template>
 
 <script>
@@ -13,7 +24,8 @@
     },
     data(){
       return{
-        form:{
+        model:{},
+        /*form:{
           api: '',
           isClick: true,
           title: '添加成员申请单',
@@ -27,7 +39,7 @@
             { name: 'image', label: '姓名', type:'image' },
           ],
 
-        }
+        }*/
       }
 
     },
